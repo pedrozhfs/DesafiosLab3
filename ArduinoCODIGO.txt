@@ -1,0 +1,51 @@
+///// Json
+#include <ArduinoJson.h>
+const int TAMANHO = 200;  // define o tamanho do buffer para o JSON
+
+///// Sensor DTH
+#include "DHT.h"
+#define DHTPIN  7  // define o pino usado no Arduino
+#define DHTTYPE DHT11
+DHT dht(DHTPIN, DHTTYPE); // declara o objeto da classe
+
+////// Outras declarações
+#define led 13 // define LED conectado no pino 13
+
+void setup() 
+{
+  // inicializa o sensor
+  dht.begin();
+
+  // inicializa a comunicação serial
+  Serial.begin(9600);
+
+  // configura pinos de saída do Arduino
+  pinMode(led, OUTPUT);
+}
+
+void loop() 
+{
+  StaticJsonDocument<16> json; // Aloca buffer para o objeto JSON
+
+  // Faz a leitura da temperatura  
+  float temp = dht.readTemperature();
+  // Faz a leitura da umidade
+  float umi = dht.readHumidity();
+
+  // Formato de escrita do JSON
+  json["temperatura"] = temp;
+  json["umidade"] = umi;
+
+  serializeJson(json, Serial);
+  Serial.println();
+
+  // Verifica se a temperatura é maior que 30°C ou a umidade é menor que 40%
+  if (temp > 30.0 || umi < 40.0) {
+    digitalWrite(led, HIGH); // Acende o LED
+  } else {
+    digitalWrite(led, LOW);  // Apaga o LED
+  }
+
+  // Delay
+  delay(500);
+}

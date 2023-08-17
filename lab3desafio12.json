@@ -1,0 +1,319 @@
+[
+    {
+        "id": "5118938dcd3e619a",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "530db079002957bc",
+        "type": "json",
+        "z": "5118938dcd3e619a",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 450,
+        "y": 180,
+        "wires": [
+            [
+                "da8ced9424fa2477",
+                "27c7955dd6215f2d",
+                "c5cb4c9fc389bcfa"
+            ]
+        ]
+    },
+    {
+        "id": "b0df81606f231f28",
+        "type": "change",
+        "z": "5118938dcd3e619a",
+        "name": "temperatura",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.temperatura",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 610,
+        "y": 160,
+        "wires": [
+            [
+                "1ff1ea1b30698c45"
+            ]
+        ]
+    },
+    {
+        "id": "da8ced9424fa2477",
+        "type": "change",
+        "z": "5118938dcd3e619a",
+        "name": "umidade",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.umidade",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 600,
+        "y": 340,
+        "wires": [
+            [
+                "3f0766ab641e3e69",
+                "4a6f5e65251f812d"
+            ]
+        ]
+    },
+    {
+        "id": "27c7955dd6215f2d",
+        "type": "function",
+        "z": "5118938dcd3e619a",
+        "name": "temperatura",
+        "func": "var payload = {\n    \"temperatura\": msg.payload.temperatura\n}\n\nif(payload.temperatura > 10) {\n    return node.error(\"Temperatura maior que 40°\");\n} else {\n    return payload.temperatura;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 630,
+        "y": 240,
+        "wires": [
+            [
+                "8e69c0f6c6a01720"
+            ]
+        ]
+    },
+    {
+        "id": "8e69c0f6c6a01720",
+        "type": "ui_gauge",
+        "z": "5118938dcd3e619a",
+        "name": "",
+        "group": "be798ce2cb18eea2",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temperatura Gauge",
+        "label": "units",
+        "format": "{{value}}",
+        "min": "0",
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 880,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "3f0766ab641e3e69",
+        "type": "ui_gauge",
+        "z": "5118938dcd3e619a",
+        "name": "",
+        "group": "035f55f947385f15",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "wave",
+        "title": "Umidade Gauge",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 860,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "4a6f5e65251f812d",
+        "type": "ui_chart",
+        "z": "5118938dcd3e619a",
+        "name": "",
+        "group": "035f55f947385f15",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "Umidade Chart",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 860,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1ff1ea1b30698c45",
+        "type": "ui_chart",
+        "z": "5118938dcd3e619a",
+        "name": "",
+        "group": "be798ce2cb18eea2",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "Temperatura Chart",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 870,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a8d6698a740ff83f",
+        "type": "serial in",
+        "z": "5118938dcd3e619a",
+        "name": "COM5",
+        "serial": "",
+        "x": 270,
+        "y": 180,
+        "wires": [
+            [
+                "530db079002957bc"
+            ]
+        ]
+    },
+    {
+        "id": "c4b8790e5e5df36f",
+        "type": "file",
+        "z": "5118938dcd3e619a",
+        "name": "write to file",
+        "filename": "C:\\Users\\",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "utf8",
+        "x": 410,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2de18415cd640922",
+        "type": "csv",
+        "z": "5118938dcd3e619a",
+        "name": "",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "none",
+        "multi": "one",
+        "ret": "\\r\\n",
+        "temp": "Temperatura,Umidade",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 350,
+        "y": 300,
+        "wires": [
+            [
+                "c4b8790e5e5df36f"
+            ]
+        ]
+    },
+    {
+        "id": "c5cb4c9fc389bcfa",
+        "type": "function",
+        "z": "5118938dcd3e619a",
+        "name": "refina payload",
+        "func": "var temp = msg.payload.temperatura;\nvar umid = msg.payload.umidade;\nconst m = { 'Temperatura': temp, 'Umidade': umid};\nreturn { payload: m };",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 240,
+        "wires": [
+            [
+                "2de18415cd640922"
+            ]
+        ]
+    }
+]
