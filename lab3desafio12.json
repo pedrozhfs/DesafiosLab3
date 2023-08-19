@@ -8,6 +8,149 @@
         "env": []
     },
     {
+        "id": "f99a27f76a5f9b2e",
+        "type": "serial-port",
+        "serialport": "COM3",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "6fa6ac36f8275283",
+        "type": "ui_tab",
+        "name": "Temp",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "b4061c94dec9f294",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "75f3b1bcdef418a9",
+        "type": "ui_tab",
+        "name": "Alerta",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "bf77443c839a7f78",
+        "type": "ui_group",
+        "name": "Alerta",
+        "tab": "75f3b1bcdef418a9",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
         "id": "530db079002957bc",
         "type": "json",
         "z": "5118938dcd3e619a",
@@ -21,7 +164,8 @@
             [
                 "da8ced9424fa2477",
                 "27c7955dd6215f2d",
-                "c5cb4c9fc389bcfa"
+                "c5cb4c9fc389bcfa",
+                "b0df81606f231f28"
             ]
         ]
     },
@@ -48,7 +192,8 @@
         "y": 160,
         "wires": [
             [
-                "1ff1ea1b30698c45"
+                "1ff1ea1b30698c45",
+                "8e69c0f6c6a01720"
             ]
         ]
     },
@@ -71,8 +216,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 600,
-        "y": 340,
+        "x": 620,
+        "y": 320,
         "wires": [
             [
                 "3f0766ab641e3e69",
@@ -85,7 +230,7 @@
         "type": "function",
         "z": "5118938dcd3e619a",
         "name": "temperatura",
-        "func": "var payload = {\n    \"temperatura\": msg.payload.temperatura\n}\n\nif(payload.temperatura > 10) {\n    return node.error(\"Temperatura maior que 40°\");\n} else {\n    return payload.temperatura;\n}",
+        "func": "var temperatura = msg.payload.temperatura;\n\nif (temperatura > 30) {\n    node.send({\n        payload: \"ALERTA: Temperatura maior que 30°C!\"\n    });\n} else {\n    return msg; // Encaminhar a mensagem original se a condição não for atendida\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -95,7 +240,8 @@
         "y": 240,
         "wires": [
             [
-                "8e69c0f6c6a01720"
+                "0338c255267e2e65",
+                "34ff44321c539d93"
             ]
         ]
     },
@@ -104,7 +250,7 @@
         "type": "ui_gauge",
         "z": "5118938dcd3e619a",
         "name": "",
-        "group": "be798ce2cb18eea2",
+        "group": "bf77443c839a7f78",
         "order": 0,
         "width": 0,
         "height": 0,
@@ -123,7 +269,7 @@
         "seg2": "",
         "diff": false,
         "className": "",
-        "x": 880,
+        "x": 960,
         "y": 140,
         "wires": []
     },
@@ -132,8 +278,8 @@
         "type": "ui_gauge",
         "z": "5118938dcd3e619a",
         "name": "",
-        "group": "035f55f947385f15",
-        "order": 0,
+        "group": "bf77443c839a7f78",
+        "order": 2,
         "width": 0,
         "height": 0,
         "gtype": "wave",
@@ -160,8 +306,8 @@
         "type": "ui_chart",
         "z": "5118938dcd3e619a",
         "name": "",
-        "group": "035f55f947385f15",
-        "order": 0,
+        "group": "bf77443c839a7f78",
+        "order": 3,
         "width": 0,
         "height": 0,
         "label": "Umidade Chart",
@@ -204,8 +350,8 @@
         "type": "ui_chart",
         "z": "5118938dcd3e619a",
         "name": "",
-        "group": "be798ce2cb18eea2",
-        "order": 0,
+        "group": "bf77443c839a7f78",
+        "order": 1,
         "width": 0,
         "height": 0,
         "label": "Temperatura Chart",
@@ -237,7 +383,7 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 870,
+        "x": 950,
         "y": 200,
         "wires": [
             []
@@ -247,8 +393,8 @@
         "id": "a8d6698a740ff83f",
         "type": "serial in",
         "z": "5118938dcd3e619a",
-        "name": "COM5",
-        "serial": "",
+        "name": "COM3",
+        "serial": "f99a27f76a5f9b2e",
         "x": 270,
         "y": 180,
         "wires": [
@@ -262,11 +408,11 @@
         "type": "file",
         "z": "5118938dcd3e619a",
         "name": "write to file",
-        "filename": "C:\\Users\\",
+        "filename": "C:/Users/test.text.txt",
         "filenameType": "str",
-        "appendNewline": false,
+        "appendNewline": true,
         "createDir": true,
-        "overwriteFile": "false",
+        "overwriteFile": "true",
         "encoding": "utf8",
         "x": 410,
         "y": 380,
@@ -315,5 +461,43 @@
                 "2de18415cd640922"
             ]
         ]
+    },
+    {
+        "id": "0338c255267e2e65",
+        "type": "debug",
+        "z": "5118938dcd3e619a",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload.temperatura",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 860,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "34ff44321c539d93",
+        "type": "ui_text",
+        "z": "5118938dcd3e619a",
+        "group": "bf77443c839a7f78",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Condição de Temperatura:",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 800,
+        "y": 60,
+        "wires": []
     }
 ]
